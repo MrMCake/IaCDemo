@@ -35,11 +35,11 @@ jobs:
         with:
           creds: ${{ env.AZURE_CREDENTIALS }}
           enable-AzPSSession: true
-      - name: 'Validate [${{ inputs.templateFilePath }}]'
+      - name: 'Validate template deployment for [${{ env.resourceGroupName }}]'
         shell: pwsh
         run: |
           # Load used functions
-          . (Join-Path $env:GITHUB_WORKSPACE 'utilities' 'pipelines' 'resourceValidation' 'Test-TemplateWithParameterFile.ps1')
+          . (Join-Path $env:GITHUB_WORKSPACE '.github' 'scripts' 'Test-TemplateWithParameterFile.ps1')
 
           # ----------- #
           # INVOKE TEST #
@@ -56,7 +56,7 @@ jobs:
           Write-Verbose ($functionInput | ConvertTo-Json | Out-String) -Verbose
 
           Test-TemplateWithParameterFile @functionInput -Verbose
-      - name: 'Deploy [${{ inputs.templateFilePath }}]'
+      - name: 'Deploy template [${{ env.resourceGroupName }}]'
         shell: pwsh
         run: |
           # Load used functions
