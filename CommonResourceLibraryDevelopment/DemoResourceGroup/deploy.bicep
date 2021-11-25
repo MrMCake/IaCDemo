@@ -38,6 +38,7 @@ module nsg 'br:adpsxxazacrx001.azurecr.io/bicep/modules/microsoft.network.networ
     networkSecurityGroupName: networkSecurityGroupParameters.name
   }
 }
+
 // Virtual Network
 module vnet 'br:adpsxxazacrx001.azurecr.io/bicep/modules/microsoft.network.virtualnetworks:1.0.0' = if(vNetParameters.enabled) {
   name: '${uniqueString(deployment().name, location)}-vnet'
