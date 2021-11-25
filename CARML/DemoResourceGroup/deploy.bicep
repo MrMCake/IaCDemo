@@ -40,13 +40,13 @@ module nsg 'br:adpsxxazacrx001.azurecr.io/bicep/modules/microsoft.network.networ
 }
 
 // Virtual Network
-module vnet 'br:adpsxxazacrx001.azurecr.io/bicep/modules/microsoft.network.virtualnetworks:1.0.0' = if(vNetParameters.enabled) {
+module vnet 'br:adpsxxazacrx001.azurecr.io/bicep/modules/microsoft.network.virtualnetworks:0.0.13' = if(vNetParameters.enabled) {
   name: '${uniqueString(deployment().name, location)}-vnet'
   scope: resourceGroup(resourceGroupParameters.name)
   params: {
     subnets: vNetParameters.subnets
     vNetAddressPrefixes: vNetParameters.addressPrefix
-    vNetName: vNetParameters.name
+    name: vNetParameters.name
   }
   dependsOn: [
     nsg
