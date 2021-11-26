@@ -37,6 +37,9 @@ module nsg 'br:adpsxxazacrx001.azurecr.io/bicep/modules/microsoft.network.networ
   params: {
     networkSecurityGroupName: networkSecurityGroupParameters.name
   }
+  dependsOn: [
+    rg
+  ]
 }
 
 // Virtual Network
@@ -49,6 +52,7 @@ module vnet 'br:adpsxxazacrx001.azurecr.io/bicep/modules/microsoft.network.virtu
     name: vNetParameters.name
   }
   dependsOn: [
+    rg
     nsg
   ]
 }
