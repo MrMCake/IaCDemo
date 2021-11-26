@@ -5,13 +5,13 @@ targetScope = 'subscription'
 // ================ //
 
 @description('ResourceGroup input parameter')
-param resourceGroupParameters object = {}
+param resourceGroupParameters object
 
 @description('Network Security Group input parameter')
-param networkSecurityGroupParameters object = {}
+param networkSecurityGroupParameters object
 
 @description('Virtual Network input parameter')
-param vNetParameters object = {}
+param vNetParameters object
 
 // Shared
 param location string = deployment().location
