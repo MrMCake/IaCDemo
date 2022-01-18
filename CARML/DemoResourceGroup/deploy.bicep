@@ -21,7 +21,7 @@ param location string = deployment().location
 // =========== //
 
 // Resource Group
-module rg 'br:adpsxxazacrx001.azurecr.io/bicep/modules/microsoft.resources.resourcegroups:0.0.12' = if(resourceGroupParameters.enabled) {
+module rg 'br/modules:microsoft.resources.resourcegroups:0.0.12' = if(resourceGroupParameters.enabled) {
   name: '${uniqueString(deployment().name, location)}-rg'
   scope: subscription()
   params: {
@@ -31,7 +31,7 @@ module rg 'br:adpsxxazacrx001.azurecr.io/bicep/modules/microsoft.resources.resou
 }
 
 // Network Security Group
-module nsg 'br:adpsxxazacrx001.azurecr.io/bicep/modules/microsoft.network.networksecuritygroups:0.0.16' = if(networkSecurityGroupParameters.enabled) {
+module nsg 'br/modules:microsoft.network.networksecuritygroups:0.0.16' = if(networkSecurityGroupParameters.enabled) {
   name: '${uniqueString(deployment().name, location)}-nsg'
   scope: resourceGroup(resourceGroupParameters.name)
   params: {
@@ -43,7 +43,7 @@ module nsg 'br:adpsxxazacrx001.azurecr.io/bicep/modules/microsoft.network.networ
 }
 
 // Virtual Network
-module vnet 'br:adpsxxazacrx001.azurecr.io/bicep/modules/microsoft.network.virtualnetworks:0.0.13' = if(vNetParameters.enabled) {
+module vnet 'br/modules:microsoft.network.virtualnetworks:0.0.13' = if(vNetParameters.enabled) {
   name: '${uniqueString(deployment().name, location)}-vnet'
   scope: resourceGroup(resourceGroupParameters.name)
   params: {
