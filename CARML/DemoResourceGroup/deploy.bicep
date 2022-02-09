@@ -31,11 +31,11 @@ module rg 'br/modules:microsoft.resources.resourcegroups:0.0.12' = if(resourceGr
 }
 
 // Network Security Group
-module nsg 'br/modules:microsoft.network.networksecuritygroups:0.0.16' = if(networkSecurityGroupParameters.enabled) {
+module nsg 'br/modules:microsoft.network.networksecuritygroups:0.4.735' = if(networkSecurityGroupParameters.enabled) {
   name: '${uniqueString(deployment().name, location)}-nsg'
   scope: resourceGroup(resourceGroupParameters.name)
   params: {
-    networkSecurityGroupName: networkSecurityGroupParameters.name
+    name: networkSecurityGroupParameters.name
   }
   dependsOn: [
     rg
@@ -48,7 +48,7 @@ module vnet 'br/modules:microsoft.network.virtualnetworks:0.0.13' = if(vNetParam
   scope: resourceGroup(resourceGroupParameters.name)
   params: {
     subnets: vNetParameters.subnets
-    vNetAddressPrefixes: vNetParameters.addressPrefix
+    addressPrefixes: vNetParameters.addressPrefix
     name: vNetParameters.name
   }
   dependsOn: [
