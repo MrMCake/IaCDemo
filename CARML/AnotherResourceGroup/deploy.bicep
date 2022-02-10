@@ -30,6 +30,7 @@ module rg 'br/modules:microsoft.resources.resourcegroups:0.4.735' = {
   params: {
     name: rgParam.name
     location: location
+    roleAssignments: rgParam.name
   }
 }
 
