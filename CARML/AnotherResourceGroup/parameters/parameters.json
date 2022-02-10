@@ -8,6 +8,12 @@
                 "name": "IaCDemoRg"
             }
         },
+        "lawParameters": {
+            "value": {
+                "enabled": true,
+                "name": "IaCDemoLaw"
+            }
+        },
         "networkSecurityGroupParameters": {
             "value": {
                 "enabled": true,
@@ -18,7 +24,7 @@
             "value": {
                 "enabled": true,
                 "name": "IaCDemoVnet",
-                "addressPrefix": [
+                "addressPrefixes": [
                     "10.0.0.0/16"
                 ],
                 "subnets": [
