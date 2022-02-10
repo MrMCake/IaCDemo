@@ -4,19 +4,16 @@
     "parameters": {
         "resourceGroupParameters": {
             "value": {
-                "enabled": true,
                 "name": "IaCDemoRg"
             }
         },
         "networkSecurityGroupParameters": {
             "value": {
-                "enabled": true,
                 "name": "IaCDemoNsg"
             }
         },
         "vNetParameters": {
             "value": {
-                "enabled": true,
                 "name": "IaCDemoVnet",
                 "addressPrefixes": [
                     "10.0.0.0/16"
