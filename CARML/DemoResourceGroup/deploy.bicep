@@ -21,11 +21,11 @@ param location string = deployment().location
 // =========== //
 
 // Resource Group
-module rg 'br/modules:microsoft.resources.resourcegroups:0.0.12' = if(resourceGroupParameters.enabled) {
+module rg 'br/modules:microsoft.resources.resourcegroups:0.4.735' = if(resourceGroupParameters.enabled) {
   name: '${uniqueString(deployment().name, location)}-rg'
   scope: subscription()
   params: {
-    resourceGroupName: resourceGroupParameters.name
+    name: resourceGroupParameters.name
     location: location
   }
 }
@@ -43,7 +43,7 @@ module nsg 'br/modules:microsoft.network.networksecuritygroups:0.4.735' = if(net
 }
 
 // Virtual Network
-module vnet 'br/modules:microsoft.network.virtualnetworks:0.0.13' = if(vNetParameters.enabled) {
+module vnet 'br/modules:microsoft.network.virtualnetworks:0.4.735' = if(vNetParameters.enabled) {
   name: '${uniqueString(deployment().name, location)}-vnet'
   scope: resourceGroup(resourceGroupParameters.name)
   params: {
