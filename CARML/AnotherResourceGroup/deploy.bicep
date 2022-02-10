@@ -48,7 +48,7 @@ module vnet 'br/modules:microsoft.network.virtualnetworks:0.4.735' = if(vNetPara
   scope: resourceGroup(resourceGroupParameters.name)
   params: {
     subnets: vNetParameters.subnets
-    addressPrefixes: vNetParameters.addressPrefix
+    addressPrefixes: vNetParameters.addressPrefixes
     name: vNetParameters.name
   }
   dependsOn: [
