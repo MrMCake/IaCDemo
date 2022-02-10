@@ -5,13 +5,13 @@ targetScope = 'subscription'
 // ================ //
 
 @description('ResourceGroup input parameter')
-param resourceGroupParameters object
+param rgParam object
 
 @description('Network Security Group input parameter')
-param networkSecurityGroupParameters object
+param nsgParam object
 
 @description('Virtual Network input parameter')
-param vNetParameters object
+param vNetParam object
 
 // Shared
 param location string = deployment().location
@@ -25,7 +25,7 @@ module rg 'br/modules:microsoft.resources.resourcegroups:0.4.735' = {
   name: '${uniqueString(deployment().name, location)}-rg'
   scope: subscription()
   params: {
-    name: resourceGroupParameters.name
+    name: rgParam.name
     location: location
   }
 }
@@ -33,9 +33,9 @@ module rg 'br/modules:microsoft.resources.resourcegroups:0.4.735' = {
 // Network Security Group
 module nsg 'br/modules:microsoft.network.networksecuritygroups:0.4.735' = {
   name: '${uniqueString(deployment().name, location)}-nsg'
-  scope: resourceGroup(resourceGroupParameters.name)
+  scope: resourceGroup(rgParam.name)
   params: {
-    name: networkSecurityGroupParameters.name
+    name: nsgParam.name
   }
   dependsOn: [
     rg
@@ -45,11 +45,11 @@ module nsg 'br/modules:microsoft.network.networksecuritygroups:0.4.735' = {
 // Virtual Network
 module vnet 'br/modules:microsoft.network.virtualnetworks:0.4.735' = {
   name: '${uniqueString(deployment().name, location)}-vnet'
-  scope: resourceGroup(resourceGroupParameters.name)
+  scope: resourceGroup(rgParam.name)
   params: {
-    subnets: vNetParameters.subnets
-    addressPrefixes: vNetParameters.addressPrefixes
-    name: vNetParameters.name
+    subnets: vNetParam.subnets
+    addressPrefixes: vNetParam.addressPrefixes
+    name: vNetParam.name
   }
   dependsOn: [
     rg
