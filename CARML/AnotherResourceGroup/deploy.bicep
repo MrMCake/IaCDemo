@@ -5,16 +5,16 @@ targetScope = 'subscription'
 // ================ //
 
 @description('ResourceGroup input parameter')
-param resourceGroupParameters object
-
-@description('Network Security Group input parameter')
-param networkSecurityGroupParameters object
-
-@description('Virtual Network input parameter')
-param vNetParameters object
+param rgParam object
 
 @description('Log analytics input parameter')
-param lawParameters object
+param lawParam object
+
+@description('Network Security Group input parameter')
+param nsgParam object
+
+@description('Virtual Network input parameter')
+param vNetParam object
 
 // Shared
 param location string = deployment().location
@@ -28,7 +28,7 @@ module rg 'br/modules:microsoft.resources.resourcegroups:0.4.735' = {
   name: '${uniqueString(deployment().name, location)}-rg'
   scope: subscription()
   params: {
-    name: resourceGroupParameters.name
+    name: rgParam.name
     location: location
   }
 }
@@ -36,9 +36,9 @@ module rg 'br/modules:microsoft.resources.resourcegroups:0.4.735' = {
 // Log Analytics Workspace
 module law 'br/modules:microsoft.operationalinsights.workspaces:0.4.735' = {
   name: '${uniqueString(deployment().name, location)}-law'
-  scope: resourceGroup(resourceGroupParameters.name)
+  scope: resourceGroup(rgParam.name)
   params: {
-    name: lawParameters.name
+    name: lawParam.name
   }
   dependsOn: [
     rg
@@ -48,10 +48,9 @@ module law 'br/modules:microsoft.operationalinsights.workspaces:0.4.735' = {
 // Network Security Group
 module nsg 'br/modules:microsoft.network.networksecuritygroups:0.4.735' = {
   name: '${uniqueString(deployment().name, location)}-nsg'
-  scope: resourceGroup(resourceGroupParameters.name)
+  scope: resourceGroup(rgParam.name)
   params: {
-    name: networkSecurityGroupParameters.name
-    diagnosticWorkspaceId: law.outputs.resourceId
+    name: nsgParam.name
   }
   dependsOn: [
     rg
@@ -61,12 +60,11 @@ module nsg 'br/modules:microsoft.network.networksecuritygroups:0.4.735' = {
 // Virtual Network
 module vnet 'br/modules:microsoft.network.virtualnetworks:0.4.735' = {
   name: '${uniqueString(deployment().name, location)}-vnet'
-  scope: resourceGroup(resourceGroupParameters.name)
+  scope: resourceGroup(rgParam.name)
   params: {
-    subnets: vNetParameters.subnets
-    addressPrefixes: vNetParameters.addressPrefixes
-    name: vNetParameters.name
-    diagnosticWorkspaceId: law.outputs.resourceId                 
+    subnets: vNetParam.subnets
+    addressPrefixes: vNetParam.addressPrefixes
+    name: vNetParam.name
   }
   dependsOn: [
     rg
