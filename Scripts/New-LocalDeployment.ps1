@@ -1,8 +1,8 @@
 $inputObject = @{
     Name                  = 'IaCDemo' 
     Location              = 'WestEurope' 
-    TemplateParameterFile = ''
-    TemplateFile          = '' 
+    TemplateParameterFile = 'C:\dev\ip\IaCDemo\IaCDemo\CARML\DemoResourceGroup\parameters\parameters.json'
+    TemplateFile          = 'C:\dev\ip\IaCDemo\IaCDemo\CARML\DemoResourceGroup\deploy.bicep' 
     Verbose               = $true
     ErrorAction           = 'Stop'
 }

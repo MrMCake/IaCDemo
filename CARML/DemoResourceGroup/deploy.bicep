@@ -7,6 +7,9 @@ targetScope = 'subscription'
 @description('ResourceGroup input parameter')
 param rgParam object
 
+@description('Log Analytics Workspace input parameter')
+param lawParam object
+
 @description('Network Security Group input parameter')
 param nsgParam object
 
@@ -27,6 +30,16 @@ module rg 'br/modules:microsoft.resources.resourcegroups:0.4.735' = {
   params: {
     name: rgParam.name
     location: location
+    roleAssignments: rgParam.roleAssignments
+  }
+}
+
+// Log Analytics Workspace
+module law 'br/modules:microsoft.operationalinsights.workspaces:0.4.775' = {
+  name: '${uniqueString(deployment().name, location)}-law'
+  scope: resourceGroup(rgParam.name)
+  params: {
+    name: lawParam.name
   }
 }
 
@@ -36,6 +49,7 @@ module nsg 'br/modules:microsoft.network.networksecuritygroups:0.4.735' = {
   scope: resourceGroup(rgParam.name)
   params: {
     name: nsgParam.name
+    diagnosticWorkspaceId: law.outputs.resourceId
   }
   dependsOn: [
     rg
@@ -50,6 +64,7 @@ module vnet 'br/modules:microsoft.network.virtualnetworks:0.4.735' = {
     subnets: vNetParam.subnets
     addressPrefixes: vNetParam.addressPrefixes
     name: vNetParam.name
+    diagnosticWorkspaceId: law.outputs.resourceId
   }
   dependsOn: [
     rg
