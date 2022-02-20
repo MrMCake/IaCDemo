@@ -41,6 +41,9 @@ module law 'br/modules:microsoft.operationalinsights.workspaces:0.4.775' = {
   params: {
     name: lawParam.name
   }
+  dependsOn: [
+    rg
+  ]
 }
 
 // Network Security Group
